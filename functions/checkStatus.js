@@ -73,6 +73,7 @@ const getStatus = async (pinCode, age) => {
       headers: {
         "Content-Type": "application/json",
         "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7",
+"User-Agent": "Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.133 Mobile Safari/535.19"
       },
     }
   )
