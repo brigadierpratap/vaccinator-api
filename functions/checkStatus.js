@@ -4,22 +4,21 @@ const mailjet = require("node-mailjet").connect(
   "ca80aad819108c7f26ff4f4bb9b16ee8"
 );
 const fetch = require("node-fetch");
+
+const exec = require("child_process").exec;
+var z;
+
 exports.checkStatus = async () => {
   const us = await users.find({ message_sent: false });
-  us.map(async u => {
+  for (var i in us) {
+    const u = us[i];
     const diff = new Date() - u.message_time;
     if (u.message_sent === false) {
-      const x = await getStatus(u.pinCode, u.age);
-      if (x !== false) {
-        await sendMail(u, x);
-      }
+      await getStatus(u);
     } else if (diff > 86400000) {
-      const x = await getStatus(u.pinCode);
-      if (x !== false) {
-        await sendMail(u, x);
-      }
+      await getStatus(u);
     }
-  });
+  }
 };
 
 const sendMail = async (u, x) => {
@@ -58,48 +57,42 @@ const sendMail = async (u, x) => {
 function pad(s) {
   return s < 10 ? "0" + s : s;
 }
-const getStatus = async (pinCode, age) => {
-  var res = "";
+const getStatus = async u => {
+  var responseText = "",
+    flag = false;
   const d = new Date();
   const m = await [
     pad(d.getDate()),
     pad(d.getMonth() + 1),
     d.getFullYear(),
   ].join("-");
-  console.log(m, pinCode);
-  await fetch(
-    `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=${pinCode}&date=${m}`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7",
-      },
-    }
-  )
-    .then(res => {
-      return res.text();
-    })
-    .then(data => {
-      console.log(data);
+  console.log(m, u.pinCode, u.age);
+  var command = `curl -X GET "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=${u.pinCode}&date=${m}" -H "accept: application/json" -H "Accept-Language: hi_IN" -H "User-Agent: Other"|| grep "sessions"`;
+
+  await exec(command, function (error, stdout, stderr) {
+    if (error !== null) {
+      res = false;
+    } else {
+      const data = JSON.parse(stdout);
       if (data.sessions.length > 0) {
         const a = data.sessions.filter(c => {
           if (c.available_capacity > 0) {
-            if (age === true && c.min_age_limit === 45) {
+            if (u.age === true && c.min_age_limit === 45) {
               return true;
             }
             return true;
           } else return false;
         });
         for (var i = 0; i < a.length; i++) {
-          res = res + `${a[i].name} - ${a[i].available_capacity}\n`;
+          responseText =
+            responseText + `${a[i].name} - ${a[i].available_capacity}\n`;
         }
       } else {
-        res = false;
+        responseText = false;
       }
-    })
-    .catch(err => {
-      console.log(err);
-      res = false;
-    });
-  return res;
+      if (responseText !== false || responseText !== "") {
+        sendMail(u, responseText);
+      }
+    }
+  });
 };

@@ -17,7 +17,7 @@ mongoose
   .then(() => {
     setInterval(() => {
       checkStatus();
-    }, 6000);
+    }, 10000);
     console.log("DB connection successful!");
   });
 
