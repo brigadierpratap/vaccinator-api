@@ -70,13 +70,10 @@ const getStatus = async (pinCode, age) => {
   await fetch(
     `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=${pinCode}&date=${m}`,
     {
-      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7",
-        "User-Agent": "Other",
       },
-      body: null,
     }
   )
     .then(res => {
