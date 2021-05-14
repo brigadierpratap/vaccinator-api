@@ -15,9 +15,9 @@ mongoose
     useFindAndModify: false,
   })
   .then(() => {
-    setInterval(() => {
+    setTimeout(() => {
       checkStatus();
-    }, 10000);
+    }, 1000);
     console.log("DB connection successful!");
   });
 
