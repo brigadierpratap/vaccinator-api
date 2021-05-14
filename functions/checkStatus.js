@@ -67,59 +67,60 @@ const getStatus = u => {
   );
   console.log(m, u.pinCode, u.age);
 
-  request(
+  /*  request(
     `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=${u.pinCode}&date=${m}`,
     async function (error, response, body) {
       if (!error) {
         console.log("body:", body);
       } else console.error("error:", error);
     }
-  );
+  ); */
 
-  // await fetch(
-  //   `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=${u.pinCode}&date=${m}`,
-  //   {
-  //     credentials: "include",
-  //     headers: {
-  //       accept: "application/json, text/plain, */*",
-  //       "Content-Type": "application/json",
-  //       Authorization: "None",
-  //       connection: "keep-alive",
-  //       "accept-encoding": "gzip, deflate, br",
-  //       "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7",
+  await fetch(
+    `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=${u.pinCode}&date=${m}`,
+    {
+      credentials: "include",
+      headers: {
+        accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiIxNTk3YjAzNi1lYTcxLTQyOTAtYjE3My1jODhjMjI1ZDk0YTgiLCJ1c2VyX2lkIjoiMTU5N2IwMzYtZWE3MS00MjkwLWIxNzMtYzg4YzIyNWQ5NGE4IiwidXNlcl90eXBlIjoiQkVORUZJQ0lBUlkiLCJtb2JpbGVfbnVtYmVyIjo4NzA3ODgwNDk5LCJiZW5lZmljaWFyeV9yZWZlcmVuY2VfaWQiOjM0NjI0OTk4NTMyNzQ5LCJzZWNyZXRfa2V5IjoiYjVjYWIxNjctNzk3Ny00ZGYxLTgwMjctYTYzYWExNDRmMDRlIiwidWEiOiJNb3ppbGxhLzUuMCAoWDExOyBMaW51eCB4ODZfNjQpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS85MC4wLjQ0MzAuMjEyIFNhZmFyaS81MzcuMzYiLCJkYXRlX21vZGlmaWVkIjoiMjAyMS0wNS0xNFQwNzoyMjowMy4zMzJaIiwiaWF0IjoxNjIwOTc2OTIzLCJleHAiOjE2MjA5Nzc4MjN9.SHwXTy_7pFcXSrWXDtVKvdA6GZja-Y1tc3MFFKGjAt4",
+        connection: "keep-alive",
+        "accept-encoding": "gzip, deflate, br",
+        "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7",
 
-  //       "user-agent":
-  //         "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
-  //     },
-  //   }
-  // )
-  //   .then(res => {
-  //     console.log(res);
-  //   })
-  //   .then(data => {
-  //     console.log(data);
-  //     if (data.sessions.length > 0) {
-  //       const a = data.sessions.filter(c => {
-  //         if (c.available_capacity > 0) {
-  //           if (u.age === true && c.min_age_limit === 45) {
-  //             return true;
-  //           }
-  //           return true;
-  //         } else return false;
-  //       });
-  //       for (var i = 0; i < a.length; i++) {
-  //         responseText =
-  //           responseText + `${a[i].name} - ${a[i].available_capacity}\n`;
-  //       }
-  //     } else {
-  //       responseText = false;
-  //     }
-  //     console.log(responseText);
-  //     if (responseText !== false || responseText !== "") {
-  //       sendMail(u, responseText);
-  //     }
-  //   })
-  //   .catch(err => {
-  //     console.log(err.message);
-  //   });
+        "user-agent":
+          "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
+      },
+    }
+  )
+    .then(res => {
+      console.log(res);
+    })
+    .then(data => {
+      console.log(data);
+      if (data.sessions.length > 0) {
+        const a = data.sessions.filter(c => {
+          if (c.available_capacity > 0) {
+            if (u.age === true && c.min_age_limit === 45) {
+              return true;
+            }
+            return true;
+          } else return false;
+        });
+        for (var i = 0; i < a.length; i++) {
+          responseText =
+            responseText + `${a[i].name} - ${a[i].available_capacity}\n`;
+        }
+      } else {
+        responseText = false;
+      }
+      console.log(responseText);
+      if (responseText !== false || responseText !== "") {
+        sendMail(u, responseText);
+      }
+    })
+    .catch(err => {
+      console.log(err.message);
+    });
 };
