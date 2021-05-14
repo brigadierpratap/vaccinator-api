@@ -58,7 +58,7 @@ const sendMail = async (u, x) => {
 function pad(s) {
   return s < 10 ? "0" + s : s;
 }
-const getStatus = u => {
+const getStatus = async u => {
   var responseText = "",
     flag = false;
   const d = new Date();
