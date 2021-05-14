@@ -67,7 +67,7 @@ const getStatus = async u => {
     d.getFullYear(),
   ].join("-");
   console.log(m, u.pinCode, u.age);
-  var command = `curl -X GET "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=${u.pinCode}&date=${m}" -H "accept: application/json" -H "Accept-Language: hi_IN" -H "User-Agent: Other"|| grep "sessions"`;
+  var command = `curl -X GET "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=${u.pinCode}&date=${m}" -H "accept: application/json" -H "Accept-Language: hi_IN" -H "User-Agent: Other"|| grep "sessions"`;
   await fetch(
     `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=${u.pinCode}&date=${m}`,
     {
@@ -91,7 +91,8 @@ const getStatus = async u => {
   )
     .then(res => res.json())
     .then(data => {
-      if (data.sessions.length > 0) {
+      console.log(data);
+      /* if (data.sessions.length > 0) {
         const a = data.sessions.filter(c => {
           if (c.available_capacity > 0) {
             if (u.age === true && c.min_age_limit === 45) {
@@ -110,7 +111,7 @@ const getStatus = async u => {
       console.log(responseText);
       if (responseText !== false || responseText !== "") {
         sendMail(u, responseText);
-      }
+      } */
     })
     .catch(err => {
       console.log(err.message);
