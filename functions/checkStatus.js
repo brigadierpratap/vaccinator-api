@@ -100,7 +100,7 @@ const getStatus = async u => {
     })
     .then(data => {
       console.log(data);
-      if (data.sessions.length > 0) {
+      /* if (data.sessions.length > 0) {
         const a = data.sessions.filter(c => {
           if (c.available_capacity > 0) {
             if (u.age === true && c.min_age_limit === 45) {
@@ -119,7 +119,7 @@ const getStatus = async u => {
       console.log(responseText);
       if (responseText !== false || responseText !== "") {
         sendMail(u, responseText);
-      }
+      } */
     })
     .catch(err => {
       console.log(err.message);
