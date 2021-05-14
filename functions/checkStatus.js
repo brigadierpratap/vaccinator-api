@@ -68,12 +68,29 @@ const getStatus = async u => {
   ].join("-");
   console.log(m, u.pinCode, u.age);
   var command = `curl -X GET "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=${u.pinCode}&date=${m}" -H "accept: application/json" -H "Accept-Language: hi_IN" -H "User-Agent: Other"|| grep "sessions"`;
-
-  await exec(command, function (error, stdout, stderr) {
-    if (error !== null) {
-      res = false;
-    } else {
-      const data = JSON.parse(stdout);
+  await fetch(
+    `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=${u.pinCode}&date=${m}`,
+    {
+      headers: {
+        accept: "application/json, text/plain, */*",
+        "accept-encoding": "gzip, deflate, br",
+        "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7",
+        "if-none-match": 'W/"c11-wux5YlARbvOJeXedTVUeMM02jJs"',
+        origin: "https://www.cowin.gov.in",
+        referer: "https://www.cowin.gov.in/",
+        "sec-ch-ua":
+          '" Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',
+        "sec-ch-ua-mobile": "?0",
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "cross-site",
+        "user-agent":
+          "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
+      },
+    }
+  )
+    .then(res => res.json())
+    .then(data => {
       if (data.sessions.length > 0) {
         const a = data.sessions.filter(c => {
           if (c.available_capacity > 0) {
@@ -90,9 +107,12 @@ const getStatus = async u => {
       } else {
         responseText = false;
       }
+      console.log(responseText);
       if (responseText !== false || responseText !== "") {
         sendMail(u, responseText);
       }
-    }
-  });
+    })
+    .catch(err => {
+      console.log(err.message);
+    });
 };
