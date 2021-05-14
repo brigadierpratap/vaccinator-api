@@ -79,15 +79,7 @@ const getStatus = async u => {
         connection: "keep-alive",
         "accept-encoding": "gzip, deflate, br",
         "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7",
-        "if-none-match": 'W/"c11-wux5YlARbvOJeXedTVUeMM02jJs"',
-        origin: "https://www.cowin.gov.in",
-        referer: "https://www.cowin.gov.in/",
-        "sec-ch-ua":
-          '" Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',
-        "sec-ch-ua-mobile": "?0",
-        "sec-fetch-dest": "empty",
-        "sec-fetch-mode": "no-cors",
-        "sec-fetch-site": "cross-site",
+
         "user-agent":
           "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
       },
