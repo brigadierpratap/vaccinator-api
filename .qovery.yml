@@ -1,0 +1,11 @@
+---
+application:
+  name: "vaccinator-api"
+  project: "random-demo-pawan"
+  organization: "QoveryCommunity"
+routers:
+- name: "main-vaccinator-api"
+  routes:
+  - application_name: "vaccinator-api"
+    paths:
+    - "/*"
