@@ -5,7 +5,7 @@ const mailjet = require("node-mailjet").connect(
 );
 const fetch = require("node-fetch");
 const request = require("request");
-const cowin = require("cowin-api-client");
+const cowin = require("cowin");
 const exec = require("child_process").exec;
 var z;
 
