@@ -91,30 +91,30 @@ const getStatus = async u => {
   )
     .then(res => {
       if (res.ok) return res.json();
-      else console.log(res);
+      else res.text();
     })
     .then(data => {
       console.log(data);
-      if (data.sessions.length > 0) {
-        const a = data.sessions.filter(c => {
-          if (c.available_capacity > 0) {
-            if (u.age === true && c.min_age_limit === 45) {
+      if (typeof data !== "string")
+        if (data.sessions.length > 0) {
+          const a = data.sessions.filter(c => {
+            if (c.available_capacity > 0) {
+              if (u.age === true && c.min_age_limit === 45) {
+                return true;
+              }
               return true;
-            }
-            return true;
-          } else return false;
-        });
-        for (var i = 0; i < a.length; i++) {
-          responseText =
-            responseText + `${a[i].name} - ${a[i].available_capacity}\n`;
+            } else return false;
+          });
+          for (var i = 0; i < a.length; i++) {
+            responseText =
+              responseText + `${a[i].name} - ${a[i].available_capacity}\n`;
+          }
+        } else {
+          responseText = false;
         }
-      } else {
-        responseText = false;
-      }
       console.log(responseText);
       if (responseText !== false || responseText !== "") {
-        /*         sendMail(u, responseText);
-         */
+        sendMail(u, responseText);
       }
     })
     .catch(err => {
