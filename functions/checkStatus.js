@@ -84,8 +84,7 @@ const getStatus = async u => {
         "Content-Type": "application/json",
         "accept-encoding": "gzip, deflate, br",
         "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7",
-        "user-agent":
-          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36",
+        "user-agent": "insomnia/2021.2.2",
       },
     }
   )
