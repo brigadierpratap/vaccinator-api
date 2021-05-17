@@ -80,20 +80,26 @@ const getStatus = async u => {
     {
       credentials: "include",
       headers: {
-        accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-        "accept-encoding": "gzip, deflate, br",
-        "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,hi;q=0.7",
-        "user-agent": "insomnia/2021.2.2",
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Cache-Control": "max-age=0",
+        Connection: "keep-alive",
+        Host: "cdn-api.co-vin.in",
+        "If-None-Match": 'W/"20f0-I11JKrCjFKb5F1m+kkuzZOrBvAk"',
+        TE: "Trailers",
+        "Upgrade-Insecure-Requests": 1,
+        "User-Agent":
+          "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:88.0) Gecko/20100101 Firefox/88.0",
       },
     }
   )
-    .then(res => {
+    .then((res, a) => {
       if (res.ok) return res.json();
-      else res.text();
+      else return res.text();
     })
     .then(data => {
-      console.log(data);
       if (typeof data !== "string")
         if (data.sessions.length > 0) {
           const a = data.sessions.filter(c => {
@@ -113,7 +119,7 @@ const getStatus = async u => {
         }
       console.log(responseText);
       if (responseText !== false || responseText !== "") {
-        sendMail(u, responseText);
+        // sendMail(u, responseText);
       }
     })
     .catch(err => {
