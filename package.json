@@ -16,7 +16,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.11.14",
+    "mongoose": "^6.4.6",
     "netlify-lambda": "^2.0.6",
     "node-fetch": "^2.6.1",
     "node-mailjet": "^3.3.1",
